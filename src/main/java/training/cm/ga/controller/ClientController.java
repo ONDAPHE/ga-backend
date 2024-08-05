@@ -1,13 +1,17 @@
 package training.cm.ga.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import training.cm.ga.dto.ErrorEntity;
 import training.cm.ga.entites.Client;
 import training.cm.ga.services.ClientService;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -35,4 +39,5 @@ public class ClientController {
     public void modifierClt(@PathVariable int id, @RequestBody Client client){
         this.clientService.modifierClt(id, client);
     }
+
 }

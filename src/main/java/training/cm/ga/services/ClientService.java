@@ -1,5 +1,6 @@
 package training.cm.ga.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,12 @@ public class ClientService {
     }
     public Client lire(int id){
         Optional<Client> optionalClient =  this.clientRepository.findById(id);
-        return optionalClient.orElse(null);
+        return optionalClient.orElseThrow(
+                ()-> new EntityNotFoundException("Aucun client n'existe avec cet identifiant")
+        );
     }
 
-    public Client lireOuCreClienter(Client client) {
+    public Client lireOuCreClienter(Client client) throws EntityNotFoundException{
         Client clientBD = this.clientRepository.findByEmail(client.getEmail());
         if (clientBD==null){
             this.clientRepository.save(client);
